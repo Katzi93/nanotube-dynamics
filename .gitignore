@@ -1,0 +1,8 @@
+/checkpoints/
+/raw_data/
+/test_data/
+/test_outputs/
+/.idea/
+/.vscode/
+__pycache__/
+*.py[cod]
