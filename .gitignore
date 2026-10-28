@@ -2,6 +2,8 @@
 /raw_data/
 /test_data/
 /test_outputs/
+# Unpublished mathematical writeup stays local, including LaTeX sources and PDFs.
+/supplementary_information/
 /.idea/
 /.vscode/
 __pycache__/
