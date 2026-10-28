@@ -2,6 +2,15 @@
 /raw_data/
 /test_data/
 /test_outputs/
+# Experimental inputs, processed tracks, and generated analysis results.
+/tracking_data/
+/analysis_outputs/
+/ito_light_response/data/
+/ito_light_response/output/
+# Exported handoff packages contain copies of data and results.
+/handoff/tube_motion_handoff/
+/handoff/*.zip
+/handoff/*.zip.sha256
 # Unpublished mathematical writeup stays local, including LaTeX sources and PDFs.
 /supplementary_information/
 /.idea/
