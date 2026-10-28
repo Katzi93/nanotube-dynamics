@@ -7,10 +7,12 @@
 /analysis_outputs/
 /ito_light_response/data/
 /ito_light_response/output/
-# Exported handoff packages contain copies of data and results.
-/handoff/tube_motion_handoff/
-/handoff/*.zip
-/handoff/*.zip.sha256
+# Local handoff preparation, exports, development notes, and figure drafts.
+/handoff/
+/notes.md
+/sketches/
+# Handoff documents stay local at every directory depth.
+HANDOFF.md
 # Plots, figures, and images stay local regardless of their output directory.
 *.png
 *.jpg
@@ -29,5 +31,6 @@
 /supplementary_information/
 /.idea/
 /.vscode/
+/.claude/
 __pycache__/
 *.py[cod]
