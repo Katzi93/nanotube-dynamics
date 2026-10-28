@@ -1,11 +1,37 @@
 # Coding Guidelines
 
+## Repository modules
+
+- `tube_tracker/` contains the tube tracking software and graphical interface.
+- `tracking_analysis/` contains the current analysis of tube tracking data.
+- `ito_light_response/` contains the ITO light-response analysis.
+- `legacy_scripts/` contains the older exploratory analysis formerly in `test_analysis/`.
+- `tests/` contains interactive tracking tests and development scripts; `run_tracking_interface.py` launches the interface.
+
+## Mathematical writeup and LaTeX
+
+- The paper's mathematical SI is in `supplementary_information/main.tex`.
+- Before editing or compiling it, read `supplementary_information/AGENTS.md` and `supplementary_information/README.md`.
+- Use the existing `supplementary_information/build.ps1` build command. The verified MiKTeX setup does not need to be rediscovered on each turn.
+
+## Python Environment
+
+- This project runs in a conda environment named `tube-tracking-clean`.
+- Commands here execute in Git Bash, where `python`, `py`, `python3`, and `conda` are not on `PATH`; bare `python` hits the Windows Store stub and fails with "Python wurde nicht gefunden".
+- Call the interpreter by full path: `/c/Users/Flori/anaconda3/envs/tube-tracking-clean/python.exe`.
+- Running `conda init bash` once from an Anaconda Prompt would let `conda activate tube-tracking-clean` work in Git Bash and resolve bare `python`.
+
 ## General Style
 
 - This repository contains data-analysis code. Prefer simple, explicit code that is easy to inspect and modify.
 - Keep functions, modules, and individual operations small and narrowly scoped.
 - Optimize for readability over abstraction, reuse, or architectural complexity.
 - Use clear, descriptive names. Keep related variable definitions together near the beginning of the scope where they are used.
+- Use the available line width instead of aggressively wrapping code. Keep ordinary calculations, assignments, conditions, and short function calls on one line when they fit within approximately 120 characters.
+- Long function definitions and argument lists may place one parameter per line, but do not split a short expression across several lines merely to satisfy a narrow formatter default.
+- Calculate reported values before print statements. Print statements should format named values rather than perform calculations inside formatted strings.
+- Explain spatial selections and fitted geometry with exact coordinates, variables, and inequalities. Do not use vague phrases such as "near the point" or "within the region" when the code implements a specific mathematical rule.
+- Do not use ASCII or plain-text diagrams to explain geometry. Use concise prose, equations, and concrete numerical examples.
 
 ## Fail Fast
 
@@ -13,7 +39,7 @@
 - Do not add defensive code merely to keep a script running.
 - Do not silently skip failures, substitute defaults, return sentinel values, or continue with partial results.
 - Avoid broad exception handling. Catch an exception only when there is a specific, useful recovery action; otherwise let it propagate.
-- Assertions and explicit validation are appropriate when they make an analysis assumption clear, but do not duplicate errors already raised naturally by Python or a library.
+- Do not clutter analysis code with assertions for routine paths, shapes, types, dependencies, or intermediate conditions. Compact assertions are appropriate for genuine mathematical parameter constraints. Otherwise, let Python and library operations fail naturally unless an invalid scientific assumption could produce a plausible but incorrect result.
 
 ## Script Structure
 
@@ -29,6 +55,7 @@ if __name__ == "__main__":
 - Do not create a `main()` function solely to call it from the `if __name__ == "__main__":` block.
 - Define all analysis parameters together in one clearly marked block near the beginning of the `__main__` block.
 - Add a brief comment to every analysis parameter explaining what it controls.
+- Put a parameter's brief explanation inline after its assignment. Reserve separate preceding comment lines for explanations that apply to several lines or require more than one line.
 - Do not hide unexplained numeric or string literals inside functions; expose values that affect the analysis in the parameter block.
 - Keep intermediate values local to the `__main__` block or to the function that uses them.
 
