@@ -11,6 +11,20 @@
 /handoff/tube_motion_handoff/
 /handoff/*.zip
 /handoff/*.zip.sha256
+# Plots, figures, and images stay local regardless of their output directory.
+*.png
+*.jpg
+*.jpeg
+*.tif
+*.tiff
+*.svg
+*.pdf
+*.eps
+*.ps
+*.gif
+*.webp
+*.bmp
+*.pgf
 # Unpublished mathematical writeup stays local, including LaTeX sources and PDFs.
 /supplementary_information/
 /.idea/
