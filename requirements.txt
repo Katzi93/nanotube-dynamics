@@ -1,0 +1,9 @@
+# Direct dependencies installed in the tube-tracking-clean environment.
+# Tkinter is provided by the Python/conda installation rather than pip.
+numpy==2.5.2
+pandas==3.0.5
+scipy==1.18.0
+matplotlib==3.11.1
+tifffile==2025.6.11
+imagecodecs==2025.3.30
+Pillow==12.3.0

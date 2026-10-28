@@ -74,19 +74,23 @@ def trace_tube_from_seed(
         f"{initial_center[1]:.2f}), angle={initial_angle_degrees:.2f}, "
         f"score={convolution_score:.2f}"
     )
-    initial_result = fit_local_ridge(
-        image,
-        initial_center,
-        initial_angle_degrees,
-        trace_parameters["fitting_radius"],
-        trace_parameters["initial_center_search_range"],
-        trace_parameters["initial_angle_search_range_degrees"],
-        trace_parameters["fitting_minimum_sigma"],
-        trace_parameters["fitting_maximum_sigma"],
-        trace_parameters["initial_sigma"],
-        trace_parameters["initial_fitting_iterations"],
-        trace_parameters["maximum_function_evaluations"],
-    )
+    try:
+        initial_result = fit_local_ridge(
+            image,
+            initial_center,
+            initial_angle_degrees,
+            trace_parameters["fitting_radius"],
+            trace_parameters["initial_center_search_range"],
+            trace_parameters["initial_angle_search_range_degrees"],
+            trace_parameters["fitting_minimum_sigma"],
+            trace_parameters["fitting_maximum_sigma"],
+            trace_parameters["initial_sigma"],
+            trace_parameters["initial_fitting_iterations"],
+            trace_parameters["maximum_function_evaluations"],
+        )
+    except RuntimeError as error:
+        print(f"{trace_label} rejected: {error}")
+        return {"positions": np.empty((0, 2), dtype=np.float64), "length": 0.0}
     extension_arguments = (
         trace_parameters["extension_step_length"],
         trace_parameters["fitting_radius"],
@@ -277,23 +281,23 @@ def write_labeled_stack(output_path, labeled_frames, playback_frames_per_second)
 
 if __name__ == "__main__":
     # Read-only microscopy TIFF stack containing the tracked frames.
-    input_path = Path("test_data/test_1.tif")
-    # Single labeled RGB TIFF stack, overwritten on every run.
-    output_path = Path("test_outputs/candidate_tube_tracking.tif")
-    # Ten consecutive zero-based frames included in this tracking test.
-    frame_indices = tuple(range(80, 90))
+    input_path = Path("test_data/test_2.tif")
+    # Distinct labeled RGB TIFF stack for the 30-frame legacy-tracker demonstration.
+    output_path = Path("test_outputs/legacy_tracker_test2_frames_070_099.tif")
+    # Thirty consecutive zero-based frames from frame 70 through frame 99.
+    frame_indices = tuple(range(70, 100))
     # Fractions along each old trace used as five next-frame seeds.
     automatic_seed_length_fractions = (0.15, 0.325, 0.5, 0.675, 0.85)
-    # Local convolution radius in pixels around the manual frame-80 click.
+    # Local convolution radius in pixels around the manual first-frame click.
     manual_seed_search_radius = 8
     # Larger local convolution radius around automatic next-frame seeds.
     automatic_seed_search_radius = 15
     # Number of equally spaced positions used to compare complete traces.
     comparison_point_count = 50
     # Largest accepted fractional length change between consecutive frames.
-    maximum_relative_length_difference = 0.20
+    maximum_relative_length_difference = 0.40
     # Largest accepted tube-center movement in pixels between frames.
-    maximum_center_position_difference = 20.0
+    maximum_center_position_difference = 25.0
     # Largest accepted mean orientation change between frames in degrees.
     maximum_mean_orientation_difference_degrees = 30.0
     # Lower raw-intensity percentile displayed as black in the TIFF stack.
@@ -349,7 +353,7 @@ if __name__ == "__main__":
     }
 
     assert input_path.is_file(), f"Missing input TIFF: {input_path}"
-    assert len(frame_indices) == 10
+    assert len(frame_indices) == 30
     assert len(automatic_seed_length_fractions) == 5
 
     print(f"Reading reference frame {frame_indices[0]} from {input_path}...")

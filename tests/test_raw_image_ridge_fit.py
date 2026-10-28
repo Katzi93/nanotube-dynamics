@@ -221,7 +221,8 @@ def fit_local_ridge(
             ),
             max_nfev=maximum_function_evaluations,
         )
-        assert fit.success, fit.message
+        if not fit.success:
+            raise RuntimeError(f"Ridge fit did not converge: {fit.message}")
 
         background, amplitude, normal_offset, angle_offset, sigma = fit.x
         ridge_sum_squared_error = np.sum(fit.fun**2)
@@ -359,19 +360,23 @@ def extend_tube(
             print(f"Direction {direction_sign:+d} stopped at the image boundary.")
             break
 
-        fitted_result = fit_local_ridge(
-            image,
-            predicted_center,
-            previous_result.angle_degrees,
-            fitting_radius,
-            center_search_range,
-            angle_search_range_degrees,
-            fitting_minimum_sigma,
-            fitting_maximum_sigma,
-            previous_result.sigma,
-            fitting_iterations,
-            maximum_function_evaluations,
-        )
+        try:
+            fitted_result = fit_local_ridge(
+                image,
+                predicted_center,
+                previous_result.angle_degrees,
+                fitting_radius,
+                center_search_range,
+                angle_search_range_degrees,
+                fitting_minimum_sigma,
+                fitting_maximum_sigma,
+                previous_result.sigma,
+                fitting_iterations,
+                maximum_function_evaluations,
+            )
+        except RuntimeError as error:
+            print(f"Direction {direction_sign:+d} stopped after {len(accepted_results)} extensions: {error}")
+            break
         rejection_reasons = fit_rejection_reasons(
             fitted_result,
             previous_result,
