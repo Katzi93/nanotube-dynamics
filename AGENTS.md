@@ -11,7 +11,7 @@
 ## Mathematical writeup and LaTeX
 
 - The paper's mathematical SI is in `supplementary_information/main.tex`.
-- Before editing or compiling it, read `supplementary_information/AGENTS.md` and `supplementary_information/README.md`.
+- When starting SI writing work or switching to writing mode, read `supplementary_information/AGENTS.md`. It routes to the writing style and build workflow; reuse unchanged instructions during the session instead of rereading them for every edit.
 - Use the existing `supplementary_information/build.ps1` build command. The verified MiKTeX setup does not need to be rediscovered on each turn.
 
 ## Python Environment

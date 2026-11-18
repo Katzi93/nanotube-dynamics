@@ -11,6 +11,7 @@
 /handoff/
 /notes.md
 /sketches/
+/tmp/
 # Handoff documents stay local at every directory depth.
 HANDOFF.md
 # Plots, figures, and images stay local regardless of their output directory.
@@ -27,8 +28,9 @@ HANDOFF.md
 *.webp
 *.bmp
 *.pgf
-# Unpublished mathematical writeup stays local, including LaTeX sources and PDFs.
+# Unpublished mathematical writeup and theory figures stay local, including their sources.
 /supplementary_information/
+/theory_figures/
 /.idea/
 /.vscode/
 /.claude/
