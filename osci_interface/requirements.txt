@@ -1,0 +1,4 @@
+numpy>=1.24
+PyQt5>=5.15
+pyqtgraph>=0.13.7
+PyVISA>=1.14

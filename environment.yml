@@ -1,0 +1,7 @@
+name: tube-tracking-clean
+dependencies:
+  - python=3.12
+  - tk
+  - pip
+  - pip:
+      - -r requirements.txt

@@ -1,5 +1,6 @@
 """Plot the light-induced ITO current and fit a saturating response."""
 
+from itertools import dropwhile
 from pathlib import Path
 import csv
 
@@ -30,8 +31,9 @@ def measurement_number(path):
 
 def load_channel_means(csv_path):
     """Load the recorded mean voltage for CH1 and CH2 in measurement order."""
-    with csv_path.open(newline="") as csv_file:
-        rows = list(csv.DictReader(csv_file))
+    with csv_path.open(encoding="utf-8-sig", newline="") as csv_file:
+        lines = dropwhile(lambda line: not line.strip(), csv_file)
+        rows = list(csv.DictReader(lines))
 
     ch1_means = np.array([float(row["Mean"]) for row in rows if row["Channel"] == "CH1"])
     ch2_means = np.array([float(row["Mean"]) for row in rows if row["Channel"] == "CH2"])

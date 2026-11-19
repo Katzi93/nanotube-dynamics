@@ -7,3 +7,6 @@ matplotlib==3.11.1
 tifffile==2025.6.11
 imagecodecs==2025.3.30
 Pillow==12.3.0
+
+# Oscilloscope recorder dependencies.
+-r osci_interface/requirements.txt
